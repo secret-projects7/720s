@@ -58,8 +58,9 @@ body {
   pointer-events: none;
   overflow: hidden;
   background: transparent;
-  z-index: 9;
+  z-index: 20; /* higher than landing and main screen */
   opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 #transition-layer.show {
@@ -73,6 +74,7 @@ body {
   width: 300px;
   max-width: 40vw;
   transform: translateX(0);
+  z-index: 21; /* make sure car is above everything in the layer */
 }
 
 /* Car animation (moves across screen) */
@@ -85,13 +87,11 @@ body {
   0% {
     transform: translateX(0);
   }
-  50% {
-    transform: translateX(140vw);
-  }
   100% {
-    transform: translateX(140vw);
+    transform: translateX(160vw);
   }
 }
+
 
 /* Main screen */
 
