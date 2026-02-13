@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Birthday Surprise</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Landing screen -->
+  <div id="landing">
+    <div class="landing-content">
+      <h1>Is it your birthday?</h1>
+      <button id="yesButton">yes!</button>
+    </div>
+  </div>
+
+  <!-- Car + transition overlay -->
+  <div id="transition-layer">
+    <img src="assets/mclaren.png" alt="McLaren F1 car" id="car" />
+  </div>
+
+  <!-- Main birthday screen -->
+  <div id="main-screen">
+    <div id="confetti-canvas"></div>
+
+    <div class="birthday-content">
+      <div class="birthday-text">
+        <h2>Happy Birthday!!!! 🎉</h2>
+        <div class="emoji-row">
+          <span>🎊</span>
+          <span>🎣🐟</span>
+          <span>💙</span>
+        </div>
+      </div>
+
+      <div class="people-grid">
+        <div class="person">
+          <img src="assets/jaze-kabia.png" alt="Jaze Kabia" />
+          <p>Jaze Kabia</p>
+        </div>
+        <div class="person">
+          <img src="assets/kieran-green.png" alt="Kieran Green" />
+          <p>Kieran Green</p>
+        </div>
+        <div class="person">
+          <img src="assets/leah-williamson.png" alt="Leah Williamson" />
+          <p>Leah Williamson</p>
+        </div>
+        <div class="person">
+          <img src="assets/oscar-piastri.png" alt="Oscar Piastri" />
+          <p>Oscar Piastri</p>
+        </div>
+        <div class="person">
+          <img src="assets/lauren-bell.png" alt="Lauren Bell" />
+          <p>Lauren Bell</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Optional audio (must be your own or properly licensed file) -->
+  <!-- Replace src with your hosted MP3 or remove if you don't want audio -->
+  <audio id="birthdaySong" src="assets/half-the-world-away.mp3"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
