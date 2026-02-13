@@ -1,0 +1,200 @@
+/* General reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* Landing page */
+
+#landing {
+  position: fixed;
+  inset: 0;
+  background: #001b36; /* dark blue */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.landing-content {
+  text-align: center;
+  color: #ffb347; /* papaya-ish orange */
+}
+
+.landing-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.landing-content button {
+  padding: 0.75rem 2rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 999px;
+  background-color: #ffb347;
+  color: #001b36;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.landing-content button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Transition layer with car */
+
+#transition-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: transparent;
+  z-index: 9;
+  opacity: 0;
+}
+
+#transition-layer.show {
+  opacity: 1;
+}
+
+#car {
+  position: absolute;
+  bottom: 10%;
+  left: -40%;
+  width: 300px;
+  max-width: 40vw;
+  transform: translateX(0);
+}
+
+/* Car animation (moves across screen) */
+
+.car-drive {
+  animation: drive-across 2.5s ease-in-out forwards;
+}
+
+@keyframes drive-across {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(140vw);
+  }
+  100% {
+    transform: translateX(140vw);
+  }
+}
+
+/* Main screen */
+
+#main-screen {
+  position: fixed;
+  inset: 0;
+  background-color: #4169e1; /* royal blue */
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+#main-screen.show {
+  display: flex;
+}
+
+/* Confetti canvas container */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Birthday content */
+
+.birthday-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  border-radius: 24px;
+  background: rgba(0, 0, 0, 0.25);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  border: 4px solid #e56717; /* accent color */
+}
+
+.birthday-text {
+  flex: 1 1 260px;
+  text-align: center;
+}
+
+.birthday-text h2 {
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  font-size: 3rem;
+  color: #b0e0ff; /* light blue */
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  margin-bottom: 1rem;
+}
+
+.emoji-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  font-size: 2.2rem;
+}
+
+/* People cutouts */
+
+.people-grid {
+  flex: 1 1 320px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.person {
+  width: 130px;
+  text-align: center;
+  color: #e56717; /* accent for names */
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.person img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  border: 3px solid #b0e0ff;
+  object-fit: cover;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.45);
+}
+
+/* Responsiveness */
+
+@media (max-width: 768px) {
+  .birthday-text h2 {
+    font-size: 2.2rem;
+  }
+
+  .birthday-content {
+    padding: 1.5rem;
+  }
+
+  #car {
+    width: 220px;
+  }
+}
