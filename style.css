@@ -166,13 +166,33 @@ body {
   justify-content: center;
 }
 
+.people-grid {
+  flex: 1 1 320px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
 .person {
   width: 130px;
   text-align: center;
-  color: #e56717; /* accent for names */
+  color: #e56717;
   font-weight: bold;
   font-size: 0.9rem;
+  background: transparent; /* ensure no box background */
 }
+
+.person img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  border: 0; /* remove border if you want pure cutout */
+  background: transparent; /* no white backing */
+  object-fit: contain;
+  box-shadow: none; /* remove shadow to look more like cutouts */
+}
+
 
 .person img {
   width: 100%;
@@ -190,11 +210,33 @@ body {
     font-size: 2.2rem;
   }
 
-  .birthday-content {
-    padding: 1.5rem;
-  }
+.birthday-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  width: 100%;
+  display: flex;
+  flex-direction: column; /* stack text and people */
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  border-radius: 24px;
+  background: rgba(0, 0, 0, 0.25);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  border: 4px solid #e56717;
+}
 
-  #car {
-    width: 220px;
-  }
+.birthday-text {
+  width: 100%;
+  text-align: center; /* center text within full width */
+}
+
+.birthday-text h2 {
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  font-size: 3rem;
+  color: #b0e0ff;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  margin-bottom: 1rem;
+}
 }
