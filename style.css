@@ -1,232 +1,177 @@
-/* =====================
-   RESET
-   ===================== */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body {
-  width: 100%; height: 100%;
-  font-family: Arial, sans-serif;
-  overflow: hidden;
-}
+/* RESET */
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; font-family:Arial,sans-serif; }
 
-/* =====================
-   LANDING
-   ===================== */
+/* ---- LANDING ---- */
 #landing {
-  position: fixed; inset: 0;
-  background: #001b36;
-  display: flex; align-items: center; justify-content: center;
-  z-index: 10;
-  transition: opacity 0.5s ease;
+  position:fixed; inset:0;
+  background:#001b36;
+  display:flex; align-items:center; justify-content:center;
+  z-index:10;
+  transition:opacity 0.5s ease;
 }
-#landing.fade-out { opacity: 0; pointer-events: none; }
-
-.landing-content { text-align: center; color: #ffb347; }
-.landing-content h1 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+#landing.fade-out { opacity:0; pointer-events:none; }
+.landing-content { text-align:center; color:#ffb347; }
+.landing-content h1 { font-size:2.5rem; margin-bottom:1.5rem; }
 .landing-content button {
-  padding: 0.75rem 2.5rem; font-size: 1.2rem;
-  border: none; border-radius: 999px;
-  background: #ffb347; color: #001b36;
-  cursor: pointer; font-weight: bold;
-  transition: transform 0.2s, box-shadow 0.2s;
+  padding:0.75rem 2.5rem; font-size:1.2rem;
+  border:none; border-radius:999px;
+  background:#ffb347; color:#001b36;
+  cursor:pointer; font-weight:bold;
+  transition:transform 0.2s,box-shadow 0.2s;
 }
 .landing-content button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(255,179,71,0.4);
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(255,179,71,0.4);
 }
 
-/* =====================
-   CAR TRANSITION
-   ===================== */
+/* ---- CAR LAYER ---- */
 #transition-layer {
-  position: fixed; inset: 0;
-  background: #001b36;
-  z-index: 20;
-  opacity: 0;
-  pointer-events: none;
-  overflow: hidden;
-  transition: opacity 0.35s ease;
+  position:fixed; inset:0;
+  background:#001b36;
+  z-index:20;
+  opacity:0;
+  pointer-events:none;
+  overflow:hidden;
+  transition:opacity 0.35s ease;
 }
-#transition-layer.show { opacity: 1; }
+#transition-layer.show { opacity:1; }
 
-/* Speed stripe */
+/* speed stripe */
 #transition-layer::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0;
-  bottom: 19%;
-  height: 3px;
-  background: linear-gradient(to right, transparent 0%, #ffb347 30%, #e56717 70%, transparent 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease 0.4s;
+  content:'';
+  position:absolute;
+  left:0; right:0; bottom:19%;
+  height:3px;
+  background:linear-gradient(to right,transparent 0%,#ffb347 30%,#e56717 70%,transparent 100%);
+  opacity:0;
+  transition:opacity 0.3s ease 0.4s;
 }
-#transition-layer.show::after { opacity: 0.8; }
+#transition-layer.show::after { opacity:0.8; }
 
 #car {
-  position: absolute;
-  bottom: 12%;
-  width: min(340px, 42vw);
-  filter: drop-shadow(0 10px 30px rgba(255,135,0,0.55));
-  /* start off-screen left */
-  transform: translateX(-120vw);
+  position:absolute;
+  bottom:12%;
+  width:min(340px,42vw);
+  filter:drop-shadow(0 10px 30px rgba(255,135,0,0.55));
+  transform:translateX(-120vw);
 }
-/* Driving animation uses translateX, not left */
 @keyframes drive-across {
-  0%   { transform: translateX(-120vw); }
-  100% { transform: translateX(130vw);  }
+  0%   { transform:translateX(-120vw); }
+  100% { transform:translateX(130vw); }
 }
 .car-drive {
-  animation: drive-across 2.2s cubic-bezier(0.3, 0.0, 0.7, 1.0) forwards;
+  animation:drive-across 2.2s cubic-bezier(0.3,0,0.7,1) forwards;
 }
 
-/* =====================
-   MAIN SCREEN
-   ===================== */
+/* ---- MAIN SCREEN ---- */
 #main-screen {
-  position: fixed; inset: 0;
-  background: radial-gradient(ellipse at 50% 45%, #0d2a6e 0%, #001b36 100%);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 5;
-  /* hidden until JS adds .show */
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.6s ease;
+  position:fixed; inset:0;
+  background:radial-gradient(ellipse at 50% 45%,#0d2a6e 0%,#001b36 100%);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:5;
 }
-#main-screen.show {
-  opacity: 1;
-  pointer-events: auto;
-}
+#main-screen.show { display:flex; }
 
-/* Confetti canvas (drawn by JS) */
+/* confetti canvas sits above background but below content */
 #confetti-canvas {
-  position: fixed; inset: 0;
-  pointer-events: none;
-  z-index: 6;
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:6;
 }
 
-/* =====================
-   HEART WRAPPER
-   ===================== */
+/* ---- HEART WRAPPER ---- */
 #heart-wrapper {
-  position: relative;
-  width: min(480px, 88vw);
-  /* keep it from clipping the portrait badges outside */
-  margin: 60px 80px;
-  z-index: 7;
-  /* pop-in */
-  opacity: 0;
-  transform: scale(0.3);
-  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.175,0.885,0.32,1.275);
+  position:relative;
+  width:min(420px,80vw);
+  z-index:9;
+  flex-shrink:0;
+  opacity:0;
+  transform:scale(0.3);
+  transition:opacity 0.7s ease, transform 0.7s cubic-bezier(0.175,0.885,0.32,1.275);
 }
-#heart-wrapper.reveal {
-  opacity: 1;
-  transform: scale(1);
-}
+#heart-wrapper.reveal { opacity:1; transform:scale(1); }
 
-/* SVG heart fills the wrapper */
 #heart-svg {
-  width: 100%;
-  height: auto;
-  display: block;
-  filter: drop-shadow(0 0 28px rgba(229,103,23,0.65));
+  width:100%; height:auto; display:block;
+  filter:drop-shadow(0 0 28px rgba(229,103,23,0.65));
 }
 
-/* =====================
-   HAPPY BIRTHDAY TEXT
-   ===================== */
+/* ---- HAPPY BIRTHDAY TEXT ---- */
 #hb-text {
-  position: absolute;
-  /* SVG heart centroid is roughly 50% wide, 54% from top */
-  top: 52%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  text-align: center;
-  z-index: 10;
-  width: 55%;
-  opacity: 0;
-  transition: transform 0.65s cubic-bezier(0.175,0.885,0.32,1.275) 0.55s,
-              opacity   0.45s ease 0.55s;
+  position:absolute;
+  top:52%; left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  text-align:center; z-index:11;
+  width:58%;
+  opacity:0;
+  transition:transform 0.65s cubic-bezier(0.175,0.885,0.32,1.275) 0.5s,
+             opacity 0.5s ease 0.5s;
 }
 #hb-text.reveal {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
+  transform:translate(-50%,-50%) scale(1);
+  opacity:1;
 }
 #hb-text h2 {
-  font-family: 'Comic Sans MS', cursive;
-  font-size: clamp(1.3rem, 4.5vw, 2rem);
-  color: #fff;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.55), 0 0 18px rgba(255,179,71,0.55);
-  line-height: 1.25;
-  margin-bottom: 0.5rem;
+  font-family:'Comic Sans MS',cursive;
+  font-size:clamp(1.3rem,4.5vw,2rem);
+  color:#fff;
+  text-shadow:0 2px 10px rgba(0,0,0,0.6),0 0 18px rgba(255,179,71,0.6);
+  line-height:1.25; margin-bottom:0.5rem;
 }
 .emoji-row { display:flex; justify-content:center; gap:0.7rem; font-size:1.4rem; }
 
-/* =====================
-   PERSON CUTOUTS
-   ===================== */
+/* ---- PERSON CUTOUTS ---- */
 .person {
-  position: absolute;
-  text-align: center;
-  color: #b0e0ff;
-  font-size: 0.7rem;
-  font-weight: bold;
-  opacity: 0;
-  transform: scale(0) rotate(15deg);
-  transition: opacity 0.5s ease, transform 0.55s cubic-bezier(0.175,0.885,0.32,1.275);
-  z-index: 12;
-  width: clamp(72px, 13vw, 100px);
+  position:absolute;
+  text-align:center;
+  color:#b0e0ff;
+  font-size:0.7rem; font-weight:bold;
+  opacity:0;
+  transform:scale(0) rotate(15deg);
+  transition:opacity 0.5s ease, transform 0.55s cubic-bezier(0.175,0.885,0.32,1.275);
+  z-index:12;
+  width:clamp(70px,13vw,95px);
 }
 .person.reveal { opacity:1; transform:scale(1) rotate(0deg); }
 .person img {
-  width: 100%; aspect-ratio: 1;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid #b0e0ff;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.55), 0 0 12px rgba(176,224,255,0.3);
-  display: block; margin: 0 auto 3px;
+  width:100%; aspect-ratio:1; object-fit:cover;
+  border-radius:50%;
+  border:3px solid #b0e0ff;
+  box-shadow:0 6px 18px rgba(0,0,0,0.6),0 0 12px rgba(176,224,255,0.3);
+  display:block; margin:0 auto 3px;
 }
-.person p { text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+.person p { text-shadow:0 1px 4px rgba(0,0,0,0.8); }
 
-/* --- positions relative to #heart-wrapper ---
-   Heart SVG is roughly a 480x480 square;
-   the actual heart shape sits from y≈0 to y≈100%
-   top point at ~50% x, 0% y
-   left bump ~8% x, 28% y  /  right bump ~92% x, 28% y
-   bottom tip ~50% x, 98% y
-*/
-#p1 { /* top — above the heart */ top:-14%; left:50%; transform:translate(-50%,0) scale(0) rotate(15deg); }
-#p2 { /* right */ top:20%; right:-20%; }
-#p3 { /* bottom-right */ bottom:-12%; right:10%; }
-#p4 { /* bottom-left */ bottom:-12%; left:10%; }
-#p5 { /* left */ top:20%; left:-20%; }
+/* positions around the SVG heart */
+#p1 { top:-15%; left:50%; transform:translate(-50%,0) scale(0) rotate(15deg); }
+#p2 { top:18%; right:-22%; }
+#p3 { bottom:-13%; right:8%; }
+#p4 { bottom:-13%; left:8%; }
+#p5 { top:18%; left:-22%; }
 
-#p1.reveal { transform: translate(-50%,0) scale(1) rotate(0deg); }
-#p2.reveal, #p3.reveal, #p4.reveal, #p5.reveal { transform: scale(1) rotate(0deg); }
+#p1.reveal { transform:translate(-50%,0) scale(1) rotate(0deg); }
+#p2.reveal,#p3.reveal,#p4.reveal,#p5.reveal { transform:scale(1) rotate(0deg); }
 
-/* stagger */
 #p1 { transition-delay:0.85s; }
 #p5 { transition-delay:0.95s; }
 #p2 { transition-delay:1.05s; }
 #p4 { transition-delay:1.15s; }
 #p3 { transition-delay:1.25s; }
 
-/* =====================
-   HEARTBEAT PULSE
-   ===================== */
+/* ---- HEARTBEAT ---- */
 @keyframes heartbeat {
-  0%,100% { transform: scale(1); }
-  14%     { transform: scale(1.07); }
-  28%     { transform: scale(1); }
-  42%     { transform: scale(1.04); }
-  56%     { transform: scale(1); }
+  0%,100% { transform:scale(1); }
+  14%     { transform:scale(1.07); }
+  28%     { transform:scale(1); }
+  42%     { transform:scale(1.04); }
+  56%     { transform:scale(1); }
 }
-#heart-wrapper.pulse { animation: heartbeat 2.2s ease-in-out infinite; }
+#heart-wrapper.pulse { animation:heartbeat 2.2s ease-in-out infinite; }
 
-/* =====================
-   RESPONSIVE
-   ===================== */
-@media (max-width:580px) {
-  #heart-wrapper { margin: 50px 60px; }
-  .person { width: 64px; font-size: 0.62rem; }
-  #p2 { right:-18%; } #p5 { left:-18%; }
-  #hb-text h2 { font-size: 1.2rem; }
+@media(max-width:580px){
+  .person{width:62px;font-size:0.6rem;}
+  #p2{right:-18%;}#p5{left:-18%;}
 }
