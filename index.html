@@ -22,11 +22,13 @@
 
   <!-- Main birthday screen -->
   <div id="main-screen">
-    <div id="confetti-canvas"></div>
+    <canvas id="confetti-canvas"></canvas>
 
-    <div class="birthday-content">
-      <div class="birthday-text">
-        <h2>Happy Birthday!!!! 🎉</h2>
+    <!-- Heart shape container -->
+    <div id="heart-container">
+      <!-- Happy Birthday text in center -->
+      <div id="hb-text">
+        <h2>Happy<br>Birthday!</h2>
         <div class="emoji-row">
           <span>🎊</span>
           <span>🎣🐟</span>
@@ -34,35 +36,31 @@
         </div>
       </div>
 
-      <div class="people-grid">
-        <div class="person">
-          <img src="assets/jaze-kabia.png" alt="Jaze Kabia" />
-          <p>Jaze Kabia</p>
-        </div>
-        <div class="person">
-          <img src="assets/kieran-green.png" alt="Kieran Green" />
-          <p>Kieran Green</p>
-        </div>
-        <div class="person">
-          <img src="assets/leah-williamson.png" alt="Leah Williamson" />
-          <p>Leah Williamson</p>
-        </div>
-        <div class="person">
-          <img src="assets/oscar-piastri.png" alt="Oscar Piastri" />
-          <p>Oscar Piastri</p>
-        </div>
-        <div class="person">
-          <img src="assets/lauren-bell.png" alt="Lauren Bell" />
-          <p>Lauren Bell</p>
-        </div>
+      <!-- Picture cutouts orbiting/surrounding the heart -->
+      <div class="person" id="p1">
+        <img src="assets/jaze-kabia.png" alt="Jaze Kabia" />
+        <p>Jaze Kabia</p>
+      </div>
+      <div class="person" id="p2">
+        <img src="assets/kieran-green.png" alt="Kieran Green" />
+        <p>Kieran Green</p>
+      </div>
+      <div class="person" id="p3">
+        <img src="assets/leah-williamson.png" alt="Leah Williamson" />
+        <p>Leah Williamson</p>
+      </div>
+      <div class="person" id="p4">
+        <img src="assets/oscar-piastri.png" alt="Oscar Piastri" />
+        <p>Oscar Piastri</p>
+      </div>
+      <div class="person" id="p5">
+        <img src="assets/lauren-bell.png" alt="Lauren Bell" />
+        <p>Lauren Bell</p>
       </div>
     </div>
   </div>
 
-  <!-- Optional audio (must be your own or properly licensed file) -->
-  <!-- Replace src with your hosted MP3 or remove if you don't want audio -->
   <audio id="birthdaySong" src="assets/half-the-world-away.mp3"></audio>
-
   <script src="script.js"></script>
 </body>
 </html>
