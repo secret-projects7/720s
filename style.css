@@ -120,8 +120,8 @@ html, body {
 #hb-text h2 {
   font-family:'Comic Sans MS',cursive;
   font-size:clamp(1.3rem,4.5vw,2rem);
-  color:#fff;
-  text-shadow:0 2px 10px rgba(0,0,0,0.6),0 0 18px rgba(255,179,71,0.6);
+  color:#add8e6;
+  text-shadow:0 2px 10px rgba(0,0,0,0.6),0 0 18px rgba(173,216,230,0.7);
   line-height:1.25; margin-bottom:0.5rem;
 }
 .emoji-row {
@@ -139,18 +139,24 @@ html, body {
   transform:scale(0) rotate(15deg);
   transition:opacity 0.5s ease, transform 0.55s cubic-bezier(0.175,0.885,0.32,1.275);
   z-index:6;
-  width:clamp(70px,13vw,95px);
+  width:clamp(95px,18vw,130px);
 }
+.person p { display:none; }
 .person.reveal { opacity:1; transform:scale(1) rotate(0deg); }
 .person img {
   width:100%; aspect-ratio:1;
   object-fit:cover;
+  object-position:center top;
   border-radius:50%;
   border:3px solid #b0e0ff;
   box-shadow:0 6px 18px rgba(0,0,0,0.6),0 0 12px rgba(176,224,255,0.3);
-  display:block; margin:0 auto 3px;
+  display:block; margin:0 auto;
 }
-.person p { text-shadow:0 1px 4px rgba(0,0,0,0.8); }
+
+/* Oscar Piastri – show upper half */
+#p4 img {
+  object-position:top;
+}
 
 #p1 { top:-15%; left:50%; transform:translate(-50%,0) scale(0) rotate(15deg); }
 #p2 { top:18%; right:-22%; }
@@ -179,6 +185,6 @@ html, body {
 }
 
 @media(max-width:580px){
-  .person{width:62px;font-size:0.6rem;}
+  .person{width:72px;}
   #p2{right:-18%;}#p5{left:-18%;}
 }
