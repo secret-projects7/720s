@@ -23,19 +23,25 @@
 
   <!-- Main birthday screen -->
   <div id="main-screen">
-
-    <!-- Confetti layer -->
     <canvas id="confetti-canvas"></canvas>
 
-    <!-- Heart shape + content -->
-    <div id="heart-container">
+    <!-- Heart + portraits -->
+    <div id="heart-wrapper">
 
-      <!-- Heart body (CSS pseudo-elements + lobes build the shape) -->
-      <div id="heart-bg"></div>
-      <div class="heart-lobe left"></div>
-      <div class="heart-lobe right"></div>
+      <!-- Inline SVG heart shape -->
+      <svg id="heart-svg" viewBox="0 0 100 95" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="hg" cx="50%" cy="40%" r="60%">
+            <stop offset="0%"  stop-color="#e56717"/>
+            <stop offset="60%" stop-color="#c0392b"/>
+            <stop offset="100%" stop-color="#8b0000"/>
+          </radialGradient>
+        </defs>
+        <path d="M50 90 C50 90 5 58 5 28 C5 13 17 4 30 4 C38 4 45 8 50 14 C55 8 62 4 70 4 C83 4 95 13 95 28 C95 58 50 90 50 90 Z"
+              fill="url(#hg)" />
+      </svg>
 
-      <!-- Happy Birthday text in the centre -->
+      <!-- Happy Birthday text, centred over the heart -->
       <div id="hb-text">
         <h2>Happy<br>Birthday!</h2>
         <div class="emoji-row">
@@ -45,7 +51,7 @@
         </div>
       </div>
 
-      <!-- Picture cutouts surrounding the heart -->
+      <!-- Person cutouts around the heart -->
       <div class="person" id="p1">
         <img src="assets/jaze-kabia.png" alt="Jaze Kabia" />
         <p>Jaze Kabia</p>
