@@ -1,5 +1,5 @@
 // ================================================
-// Birthday Surprise - script.js
+// Birthday Surprise — script.js  (fixed)
 // ================================================
 
 const yesButton       = document.getElementById('yesButton');
@@ -8,81 +8,82 @@ const transitionLayer = document.getElementById('transition-layer');
 const car             = document.getElementById('car');
 const mainScreen      = document.getElementById('main-screen');
 const birthdaySong    = document.getElementById('birthdaySong');
-const heartContainer  = document.getElementById('heart-container');
-const heartBg         = document.getElementById('heart-bg');
+const heartWrapper    = document.getElementById('heart-wrapper');
 const hbText          = document.getElementById('hb-text');
 const people          = document.querySelectorAll('.person');
-const heartLobes      = document.querySelectorAll('.heart-lobe');
 
-// ---- Confetti ----
-let confettiCanvas, confettiCtx;
-let confettiPieces = [];
+// confetti state
+let confettiCanvas  = null;
+let confettiCtx     = null;
+let confettiPieces  = [];
 let confettiRunning = false;
 
-// ================================================
+// ------------------------------------------------
 // CLICK HANDLER
-// ================================================
+// ------------------------------------------------
 yesButton.addEventListener('click', () => {
-  // 1. Fade out landing
+  // 1 — fade landing out
   landing.classList.add('fade-out');
 
-  // 2. Bring in the car transition layer
+  // 2 — after fade, show car on dark background
   setTimeout(() => {
     landing.style.display = 'none';
     transitionLayer.classList.add('show');
-    car.classList.add('car-drive');
-  }, 400);
+    // small rAF delay so opacity:1 transition fires BEFORE the animation class
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        car.classList.add('car-drive');
+      });
+    });
+  }, 450);
 
-  // 3. Show main birthday screen as car finishes
+  // 3 — show main screen while car is still crossing
   setTimeout(() => {
     mainScreen.classList.add('show');
     revealBirthday();
     playSongOnce();
     startConfetti();
-  }, 1800);
+  }, 1700);
 
-  // 4. Hide transition layer after car exits
+  // 4 — remove transition layer after car exits
   setTimeout(() => {
     transitionLayer.classList.remove('show');
-  }, 2700);
+    // reset car position so it doesn't jump if someone replays
+    car.classList.remove('car-drive');
+  }, 2900);
 });
 
-// ================================================
+// ------------------------------------------------
 // REVEAL SEQUENCE
-// ================================================
+// ------------------------------------------------
 function revealBirthday() {
-  // Step 1: Heart background pops in
-  if (heartBg)  heartBg.classList.add('reveal');
-  heartLobes.forEach(l => l.classList.add('reveal'));
+  // heart pops in immediately (CSS transition on #heart-wrapper)
+  heartWrapper.classList.add('reveal');
 
-  // Step 2: Heart container gets the pulse animation class
-  setTimeout(() => {
-    heartContainer.classList.add('reveal');
-  }, 300);
+  // birthday text pops in after heart arrives
+  setTimeout(() => hbText.classList.add('reveal'), 400);
 
-  // Step 3: Happy Birthday text
-  setTimeout(() => {
-    hbText.classList.add('reveal');
-  }, 700);
-
-  // Step 4: People stagger in (CSS transition-delay handles stagger)
+  // portraits stagger in (CSS transition-delay on each #p*)
   setTimeout(() => {
     people.forEach(p => p.classList.add('reveal'));
-  }, 900);
+  }, 600);
+
+  // start heartbeat pulse after all elements have settled
+  setTimeout(() => heartWrapper.classList.add('pulse'), 2000);
 }
 
-// ================================================
+// ------------------------------------------------
 // AUDIO
-// ================================================
+// ------------------------------------------------
 function playSongOnce() {
   if (!birthdaySong) return;
   birthdaySong.currentTime = 0;
   birthdaySong.play().catch(() => {});
 }
 
-// ================================================
+// ------------------------------------------------
 // CONFETTI
-// ================================================
+// ------------------------------------------------
 function startConfetti() {
   if (confettiRunning) return;
   confettiRunning = true;
@@ -90,69 +91,61 @@ function startConfetti() {
   confettiCanvas = document.getElementById('confetti-canvas');
   confettiCanvas.width  = window.innerWidth;
   confettiCanvas.height = window.innerHeight;
-  confettiCanvas.style.position     = 'fixed';
-  confettiCanvas.style.inset        = '0';
-  confettiCanvas.style.pointerEvents = 'none';
-  confettiCanvas.style.zIndex       = '6';
-
   confettiCtx = confettiCanvas.getContext('2d');
-  createConfettiPieces(280);
-  requestAnimationFrame(updateConfetti);
 
-  // Stop after 18 seconds
+  spawnPieces(300);
+  requestAnimationFrame(tickConfetti);
+
+  // stop after 20 s
   setTimeout(() => {
     confettiRunning = false;
-    confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-  }, 18000);
+    if (confettiCtx) confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+  }, 20000);
 }
 
-function createConfettiPieces(count) {
-  const colors = ['#b0e0ff', '#e56717', '#ffffff', '#ffb347', '#4169e1', '#c0392b', '#f0e68c'];
-  for (let i = 0; i < count; i++) {
+function spawnPieces(n) {
+  const palette = ['#b0e0ff','#e56717','#ffffff','#ffb347','#4169e1','#c0392b','#f0e68c'];
+  for (let i = 0; i < n; i++) {
     confettiPieces.push({
-      x:             Math.random() * (confettiCanvas ? confettiCanvas.width  : window.innerWidth),
-      y:             Math.random() * (confettiCanvas ? confettiCanvas.height : window.innerHeight) - window.innerHeight,
-      w:             6 + Math.random() * 8,
-      h:             6 + Math.random() * 8,
-      color:         colors[Math.floor(Math.random() * colors.length)],
-      speedY:        1.5 + Math.random() * 3,
-      speedX:        -1.5 + Math.random() * 3,
-      rotation:      Math.random() * 360,
-      rotationSpeed: -6 + Math.random() * 12,
-      shape:         Math.random() < 0.5 ? 'rect' : 'circle',
+      x:  Math.random() * confettiCanvas.width,
+      y:  Math.random() * confettiCanvas.height - confettiCanvas.height,
+      w:  5 + Math.random() * 9,
+      h:  5 + Math.random() * 9,
+      color: palette[Math.floor(Math.random() * palette.length)],
+      vy: 1.8 + Math.random() * 3,
+      vx: -1.5 + Math.random() * 3,
+      rot:  Math.random() * 360,
+      rotV: -7 + Math.random() * 14,
+      circle: Math.random() < 0.4
     });
   }
 }
 
-function updateConfetti() {
+function tickConfetti() {
   if (!confettiRunning) return;
   confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-  confettiPieces.forEach(p => {
-    p.x += p.speedX;
-    p.y += p.speedY;
-    p.rotation += p.rotationSpeed;
+  for (const p of confettiPieces) {
+    p.x   += p.vx;
+    p.y   += p.vy;
+    p.rot += p.rotV;
     if (p.y > confettiCanvas.height) {
       p.y = -10;
       p.x = Math.random() * confettiCanvas.width;
     }
-    drawPiece(p);
-  });
-  requestAnimationFrame(updateConfetti);
-}
-
-function drawPiece(p) {
-  confettiCtx.save();
-  confettiCtx.translate(p.x, p.y);
-  confettiCtx.rotate((p.rotation * Math.PI) / 180);
-  confettiCtx.fillStyle = p.color;
-  if (p.shape === 'circle') {
-    confettiCtx.beginPath();
-    confettiCtx.arc(0, 0, p.w / 2, 0, Math.PI * 2);
-    confettiCtx.fill();
-  } else {
-    confettiCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+    confettiCtx.save();
+    confettiCtx.translate(p.x, p.y);
+    confettiCtx.rotate(p.rot * Math.PI / 180);
+    confettiCtx.fillStyle = p.color;
+    if (p.circle) {
+      confettiCtx.beginPath();
+      confettiCtx.arc(0, 0, p.w / 2, 0, Math.PI * 2);
+      confettiCtx.fill();
+    } else {
+      confettiCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+    }
+    confettiCtx.restore();
   }
-  confettiCtx.restore();
+  requestAnimationFrame(tickConfetti);
 }
 
 window.addEventListener('resize', () => {
