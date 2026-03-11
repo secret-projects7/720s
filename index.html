@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <!-- Landing screen -->
   <div id="landing">
     <div class="landing-content">
@@ -15,18 +16,26 @@
     </div>
   </div>
 
-  <!-- Car + transition overlay -->
+  <!-- Car transition overlay -->
   <div id="transition-layer">
     <img src="assets/mclaren.png" alt="McLaren F1 car" id="car" />
   </div>
 
   <!-- Main birthday screen -->
   <div id="main-screen">
+
+    <!-- Confetti layer -->
     <canvas id="confetti-canvas"></canvas>
 
-    <!-- Heart shape container -->
+    <!-- Heart shape + content -->
     <div id="heart-container">
-      <!-- Happy Birthday text in center -->
+
+      <!-- Heart body (CSS pseudo-elements + lobes build the shape) -->
+      <div id="heart-bg"></div>
+      <div class="heart-lobe left"></div>
+      <div class="heart-lobe right"></div>
+
+      <!-- Happy Birthday text in the centre -->
       <div id="hb-text">
         <h2>Happy<br>Birthday!</h2>
         <div class="emoji-row">
@@ -36,7 +45,7 @@
         </div>
       </div>
 
-      <!-- Picture cutouts orbiting/surrounding the heart -->
+      <!-- Picture cutouts surrounding the heart -->
       <div class="person" id="p1">
         <img src="assets/jaze-kabia.png" alt="Jaze Kabia" />
         <p>Jaze Kabia</p>
@@ -57,6 +66,7 @@
         <img src="assets/lauren-bell.png" alt="Lauren Bell" />
         <p>Lauren Bell</p>
       </div>
+
     </div>
   </div>
 
