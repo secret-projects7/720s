@@ -1,6 +1,10 @@
 /* RESET */
 * { margin:0; padding:0; box-sizing:border-box; }
-html, body { width:100%; height:100%; font-family:Arial,sans-serif; }
+html, body {
+  width:100%; height:100%;
+  font-family:Arial,sans-serif;
+  overflow:hidden;
+}
 
 /* ---- LANDING ---- */
 #landing {
@@ -54,32 +58,30 @@ html, body { width:100%; height:100%; font-family:Arial,sans-serif; }
   0%   { transform:translateX(-120vw); }
   100% { transform:translateX(130vw); }
 }
-.car-drive { animation:drive-across 2.2s cubic-bezier(0.3,0,0.7,1) forwards; }
+.car-drive {
+  animation:drive-across 2.2s cubic-bezier(0.3,0,0.7,1) forwards;
+}
 
 /* ---- MAIN SCREEN ---- */
 #main-screen {
   position:fixed; inset:0;
   background:radial-gradient(ellipse at 50% 45%,#0d2a6e 0%,#001b36 100%);
-  display:none; align-items:center; justify-content:center;
+  display:flex; align-items:center; justify-content:center;
   z-index:5;
-  /* overflow visible so portrait badges outside heart-wrapper show */
+  opacity:0;
+  pointer-events:none;
   overflow:visible;
+  transition:opacity 0.6s ease;
 }
-#main-screen.show { display:flex; }
+#main-screen.show {
+  opacity:1;
+  pointer-events:auto;
+}
 
-/* confetti — position:fixed but z-index ABOVE heart-wrapper (z-index layering:
-   confetti is a sibling of main-screen in the DOM at body level;
-   we keep it fixed so it always fills the viewport,
-   but we set z-index:8 which is above main-screen(5) yet
-   since confetti canvas is transparent where not drawn,
-   it doesn't cover anything visible.
-   The heart-wrapper is inside main-screen (stacking context z-index:5)
-   so its children can't exceed z-index 5 globally.
-   Solution: move canvas INSIDE main-screen as absolute) */
+/* confetti canvas */
 #confetti-canvas {
   position:absolute; inset:0;
-  pointer-events:none;
-  z-index:1;
+  pointer-events:none; z-index:1;
   width:100%; height:100%;
 }
 
@@ -87,14 +89,15 @@ html, body { width:100%; height:100%; font-family:Arial,sans-serif; }
 #heart-wrapper {
   position:relative;
   width:min(420px,80vw);
-  z-index:2;
-  flex-shrink:0;
+  z-index:2; flex-shrink:0;
   opacity:0;
   transform:scale(0.3);
-  transition:opacity 0.7s ease,transform 0.7s cubic-bezier(0.175,0.885,0.32,1.275);
+  transition:opacity 0.7s ease, transform 0.7s cubic-bezier(0.175,0.885,0.32,1.275);
 }
-#heart-wrapper.reveal { opacity:1; transform:scale(1); }
-
+#heart-wrapper.reveal {
+  opacity:1;
+  transform:scale(1);
+}
 #heart-svg {
   width:100%; height:auto; display:block;
   filter:drop-shadow(0 0 28px rgba(229,103,23,0.7));
@@ -110,7 +113,10 @@ html, body { width:100%; height:100%; font-family:Arial,sans-serif; }
   transition:transform 0.65s cubic-bezier(0.175,0.885,0.32,1.275) 0.5s,
              opacity 0.5s ease 0.5s;
 }
-#hb-text.reveal { transform:translate(-50%,-50%) scale(1); opacity:1; }
+#hb-text.reveal {
+  transform:translate(-50%,-50%) scale(1);
+  opacity:1;
+}
 #hb-text h2 {
   font-family:'Comic Sans MS',cursive;
   font-size:clamp(1.3rem,4.5vw,2rem);
@@ -118,20 +124,27 @@ html, body { width:100%; height:100%; font-family:Arial,sans-serif; }
   text-shadow:0 2px 10px rgba(0,0,0,0.6),0 0 18px rgba(255,179,71,0.6);
   line-height:1.25; margin-bottom:0.5rem;
 }
-.emoji-row { display:flex; justify-content:center; gap:0.7rem; font-size:1.4rem; }
+.emoji-row {
+  display:flex; justify-content:center;
+  gap:0.7rem; font-size:1.4rem;
+}
 
 /* ---- PERSON CUTOUTS ---- */
 .person {
-  position:absolute; text-align:center;
-  color:#b0e0ff; font-size:0.7rem; font-weight:bold;
-  opacity:0; transform:scale(0) rotate(15deg);
-  transition:opacity 0.5s ease,transform 0.55s cubic-bezier(0.175,0.885,0.32,1.275);
+  position:absolute;
+  text-align:center;
+  color:#b0e0ff;
+  font-size:0.7rem; font-weight:bold;
+  opacity:0;
+  transform:scale(0) rotate(15deg);
+  transition:opacity 0.5s ease, transform 0.55s cubic-bezier(0.175,0.885,0.32,1.275);
   z-index:6;
   width:clamp(70px,13vw,95px);
 }
 .person.reveal { opacity:1; transform:scale(1) rotate(0deg); }
 .person img {
-  width:100%; aspect-ratio:1; object-fit:cover;
+  width:100%; aspect-ratio:1;
+  object-fit:cover;
   border-radius:50%;
   border:3px solid #b0e0ff;
   box-shadow:0 6px 18px rgba(0,0,0,0.6),0 0 12px rgba(176,224,255,0.3);
@@ -156,12 +169,14 @@ html, body { width:100%; height:100%; font-family:Arial,sans-serif; }
 
 @keyframes heartbeat {
   0%,100% { transform:scale(1); }
-  14% { transform:scale(1.07); }
-  28% { transform:scale(1); }
-  42% { transform:scale(1.04); }
-  56% { transform:scale(1); }
+  14%     { transform:scale(1.07); }
+  28%     { transform:scale(1); }
+  42%     { transform:scale(1.04); }
+  56%     { transform:scale(1); }
 }
-#heart-wrapper.pulse { animation:heartbeat 2.2s ease-in-out infinite; }
+#heart-wrapper.pulse {
+  animation:heartbeat 2.2s ease-in-out infinite;
+}
 
 @media(max-width:580px){
   .person{width:62px;font-size:0.6rem;}
